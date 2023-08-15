@@ -1,91 +1,84 @@
 package ie.jules.salon.model.entity;
 
-import jakarta.persistence.*;
-import java.util.List;
 import java.util.UUID;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "clients")
 public class Client implements CsvImport {
-    @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    private String id;
-    private boolean banned;
-    @OneToMany(mappedBy = "client")
-    private List<Appointment> appointments;
-    private String first_name;
-    private String last_name;
-    private String email;
-    private String phone;
-    private String gender;
+	@Id
+	@Column(name = "id", updatable = false, nullable = false)
+	private String id;
+	private boolean banned;
+	@Column(name = "first_name")
+	private String firstName;
+	@Column(name = "last_name")
+	private String lastName;
+	private String email;
+	private String phone;
+	private String gender;
 
-    @PrePersist
-    public void generateId() {
-        if (this.id == null || this.id.isEmpty()) {
-            this.id = UUID.randomUUID().toString();
-        }
-    }
-    public String getFirst_name() {
-        return first_name;
-    }
+	@PrePersist
+	public void generateId() {
+		if (this.id == null || this.id.isEmpty()) {
+			this.id = UUID.randomUUID().toString();
+		}
+	}
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public String getLast_name() {
-        return last_name;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public String getPhone() {
-        return phone;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+	public String getPhone() {
+		return phone;
+	}
 
-    public String getGender() {
-        return gender;
-    }
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
 
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
+	public String getGender() {
+		return gender;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public boolean isBanned() {
-        return banned;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setBanned(boolean banned) {
-        this.banned = banned;
-    }
+	public boolean isBanned() {
+		return banned;
+	}
 
-    public List<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public void setAppointments(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
+	public void setBanned(boolean banned) {
+		this.banned = banned;
+	}
 }

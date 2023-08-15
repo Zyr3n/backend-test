@@ -1,50 +1,61 @@
 package ie.jules.salon.model.entity;
 
-import jakarta.persistence.*;
-import java.util.List;
+import java.time.OffsetDateTime;
+import java.util.UUID;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 
 @Entity
 public class Appointment implements CsvImport {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private Client client;
-    @OneToMany(mappedBy = "appointment")
-    private List<Service> services;
-    @OneToMany(mappedBy = "appointment")
-    private List<Purchase> purchases;
+	@Id
+	@Column(name = "id", updatable = false, nullable = false)
+	private String id;
+	@Column(name = "start_time")
+	private OffsetDateTime startTime;
+	@Column(name = "end_time")
+	private OffsetDateTime endTime;
+	@Column(name = "client_id")
+	private String clientId;
 
-    public Long getId() {
-        return id;
-    }
+	public String getClientId() {
+		return clientId;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setClientId(String clientId) {
+		this.clientId = clientId;
+	}
 
-    public Client getClient() {
-        return client;
-    }
+	public OffsetDateTime getStartTime() {
+		return startTime;
+	}
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
+	public void setStartTime(OffsetDateTime startTime) {
+		this.startTime = startTime;
+	}
 
-    public List<Service> getServices() {
-        return services;
-    }
+	public OffsetDateTime getEndTime() {
+		return endTime;
+	}
 
-    public void setServices(List<Service> services) {
-        this.services = services;
-    }
+	public void setEndTime(OffsetDateTime endTime) {
+		this.endTime = endTime;
+	}
 
-    public List<Purchase> getPurchases() {
-        return purchases;
-    }
+	@PrePersist
+	public void generateId() {
+		if (this.id == null || this.id.isEmpty()) {
+			this.id = UUID.randomUUID().toString();
+		}
+	}
 
-    public void setPurchases(List<Purchase> purchases) {
-        this.purchases = purchases;
-    }
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }

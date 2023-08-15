@@ -1,29 +1,58 @@
 package ie.jules.salon.model.entity;
 
-import jakarta.persistence.*;
+import java.util.UUID;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.PrePersist;
 
 @Entity
 public class Service implements CsvImport {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne
-    @JoinColumn(name = "appointment_id")
-    private Appointment appointment;
+	@Id
+	@Column(name = "id", updatable = false, nullable = false)
+	private String id;
+	private String name;
+	private float price;
+	@Column(name = "loyalty_points")
+	private Long loyaltyPoints;
 
-    public Long getId() {
-        return id;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public Appointment getAppointment() {
-        return appointment;
-    }
+	public float getPrice() {
+		return price;
+	}
 
-    public void setAppointment(Appointment appointment) {
-        this.appointment = appointment;
-    }
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public Long getLoyaltyPoints() {
+		return loyaltyPoints;
+	}
+
+	public void setLoyaltyPoints(Long loyaltyPoints) {
+		this.loyaltyPoints = loyaltyPoints;
+	}
+
+	@PrePersist
+	public void generateId() {
+		if (this.id == null || this.id.isEmpty()) {
+			this.id = UUID.randomUUID().toString();
+		}
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 }

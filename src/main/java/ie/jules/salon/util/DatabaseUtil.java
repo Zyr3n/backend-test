@@ -99,38 +99,4 @@ public class DatabaseUtil {
 			}
 		}
 	}
-	//
-	// public CsvImport saveOrUpdateData(CsvImport dataImport) {
-	// switch (dataImport) {
-	// case Client c -> {
-	// if (c.getId() != null && clientRepository.existsById(c.getId())) {
-	// return clientRepository.saveAndFlush(c);
-	// } else {
-	// return clientRepository.save(c);
-	// }
-	// }
-	// case Appointment a -> {
-	// if (a.getId() != null && appointmentRepository.existsById(a.getId())) {
-	// return appointmentRepository.saveAndFlush(a);
-	// } else {
-	// return appointmentRepository.save(a);
-	// }
-	// }
-	// case Purchase p -> {
-	// if (p.getId() != null && purchaseRepository.existsById(p.getId())) {
-	// return purchaseRepository.saveAndFlush(p);
-	// } else {
-	// return purchaseRepository.save(p);
-	// }
-	// }
-	// case ie.jules.salon.model.entity.Service s -> {
-	// if (s.getId() != null && serviceRepository.existsById(s.getId())) {
-	// return serviceRepository.saveAndFlush(s);
-	// } else {
-	// return serviceRepository.save(s);
-	// }
-	// }
-	// default -> throw new IllegalStateException("Unexpected value: " + dataImport);
-	// }
-	// }
 }

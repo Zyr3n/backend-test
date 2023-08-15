@@ -7,6 +7,7 @@ public class ServiceDummy {
 	private String name;
 	private float price;
 	private Long loyalty_points;
+	private String appointment_id;
 
 	public Service serviceDummy2Service() {
 		Service service = new Service();
@@ -14,7 +15,16 @@ public class ServiceDummy {
 		service.setName(this.name);
 		service.setPrice(this.price);
 		service.setLoyaltyPoints(this.loyalty_points);
+		service.setAppointmentId(this.appointment_id);
 		return service;
+	}
+
+	public String getAppointment_id() {
+		return appointment_id;
+	}
+
+	public void setAppointment_id(String appointment_id) {
+		this.appointment_id = appointment_id;
 	}
 
 	public String getId() {

@@ -109,6 +109,7 @@ public class CSVParserUtil {
 				ServiceDummy dummy = new ServiceDummy();
 
 				dummy.setId(line.get("id"));
+				dummy.setAppointment_id(line.get("appointment_id"));
 				dummy.setName(line.get("name"));
 				dummy.setPrice(Float.parseFloat(line.get("price")));
 				dummy.setLoyalty_points(Long.parseLong(line.get("loyalty_points")));

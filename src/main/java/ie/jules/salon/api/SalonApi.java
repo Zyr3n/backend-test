@@ -1,15 +1,24 @@
 package ie.jules.salon.api;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.opencsv.exceptions.CsvValidationException;
 
+import ie.jules.salon.model.ClientLoyaltyDto;
 import ie.jules.salon.model.ImportedCsvJson;
 import ie.jules.salon.model.entity.Appointment;
 import ie.jules.salon.model.entity.Client;
@@ -73,7 +82,13 @@ public class SalonApi {
 	}
 
 	@GetMapping("/appointments/byCliendId")
-	public List<Appointment> getAppointmentsByDate(@RequestParam String cliendId) {
+	public List<Appointment> getAppointmentsByClientId(@RequestParam String cliendId) {
 		return salonService.findAppointmentsByClientId(cliendId);
+	}
+
+	@GetMapping("/clients/mostLoyal")
+	public List<ClientLoyaltyDto> getMostLoyalClientsByDate(
+			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam int limit) {
+		return salonService.findMostLoyalClients(date, limit);
 	}
 }

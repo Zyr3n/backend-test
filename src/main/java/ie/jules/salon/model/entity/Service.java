@@ -6,8 +6,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "services")
 public class Service implements CsvImport {
 	@Id
 	@Column(name = "id", updatable = false, nullable = false)
@@ -16,6 +18,16 @@ public class Service implements CsvImport {
 	private float price;
 	@Column(name = "loyalty_points")
 	private Long loyaltyPoints;
+	@Column(name = "appointment_id")
+	private String appointmentId;
+
+	public String getAppointmentId() {
+		return appointmentId;
+	}
+
+	public void setAppointmentId(String appointmentId) {
+		this.appointmentId = appointmentId;
+	}
 
 	public String getName() {
 		return name;

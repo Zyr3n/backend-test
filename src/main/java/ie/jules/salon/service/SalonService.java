@@ -4,7 +4,10 @@ import static ie.jules.salon.util.CSVParserUtil.*;
 import static ie.jules.salon.util.DatabaseUtil.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import com.opencsv.exceptions.CsvValidationException;
 
 import ie.jules.salon.enums.TableName;
+import ie.jules.salon.model.ClientLoyaltyDto;
 import ie.jules.salon.model.ImportedCsvJson;
 import ie.jules.salon.model.entity.Appointment;
 import ie.jules.salon.model.entity.Client;
@@ -110,5 +114,13 @@ public class SalonService {
 	public List<Appointment> findByStartTimeBetween(OffsetDateTime startOfDay,
 			OffsetDateTime endOfDay) {
 		return appointmentRepository.findByStartTimeBetween(startOfDay, endOfDay);
+	}
+
+	public List<ClientLoyaltyDto> findMostLoyalClients(LocalDate date, int limit) {
+		LocalDateTime localDateTime = date.atStartOfDay();
+		OffsetDateTime offsetDateTime = localDateTime.atOffset(ZoneOffset.UTC);
+		List<ClientLoyaltyDto> clientsWithLoyaltyPoints =
+				clientRepository.findTopClientsWithLoyaltyPoints(offsetDateTime, limit);
+		return clientsWithLoyaltyPoints;
 	}
 }

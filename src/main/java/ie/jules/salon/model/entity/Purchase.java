@@ -6,8 +6,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "purchases")
 public class Purchase implements CsvImport {
 	@Id
 	@Column(name = "id", updatable = false, nullable = false)

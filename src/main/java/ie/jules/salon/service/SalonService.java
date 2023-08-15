@@ -32,7 +32,6 @@ import jakarta.transaction.Transactional;
 
 @Service
 public class SalonService {
-
 	private final AppointmentRepository appointmentRepository;
 	private final ClientRepository clientRepository;
 	private final PurchaseRepository purchaseRepository;

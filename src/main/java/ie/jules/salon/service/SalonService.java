@@ -121,4 +121,40 @@ public class SalonService {
 		OffsetDateTime offsetDateTime = localDateTime.atOffset(ZoneOffset.UTC);
 		return clientRepository.findTopClientsWithLoyaltyPoints(offsetDateTime, limit);
 	}
+
+	@Transactional
+	public int deleteClientAndReferences(String id) {
+		List<Appointment> appointments = appointmentRepository.findByClientId(id).orElse(null);
+		int deletedEntities = 0;
+
+		if (appointments != null) {
+			for (Appointment appointment : appointments) {
+				deletedEntities += purchaseRepository.deleteByAppointmentId(appointment.getId());
+				deletedEntities += serviceRepository.deleteByAppointmentId(appointment.getId());
+				deletedEntities += appointmentRepository.deleteAppointmentById(appointment.getId());
+			}
+		}
+		deletedEntities += clientRepository.deleteClientById(id);
+		return deletedEntities;
+	}
+
+	@Transactional
+	public int deleteAppointment(String id) {
+		return appointmentRepository.deleteAppointmentById(id);
+	}
+
+	@Transactional
+	public int deleteService(String id) {
+		return serviceRepository.deleteServiceById(id);
+	}
+
+	@Transactional
+	public int deletePurchase(String id) {
+		return purchaseRepository.deletePurchaseById(id);
+	}
+
+	@Transactional
+	public int deleteClient(String id) {
+		return clientRepository.deleteClientById(id);
+	}
 }

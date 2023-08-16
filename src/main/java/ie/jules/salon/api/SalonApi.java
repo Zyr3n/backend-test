@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -90,5 +91,49 @@ public class SalonApi {
 	public List<ClientLoyaltyDto> getMostLoyalClientsByDate(
 			@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date, @RequestParam int limit) {
 		return salonService.findMostLoyalClients(date, limit);
+	}
+
+	@DeleteMapping("/clients/clientAndReferences/{id}")
+	public ResponseEntity<String> deleteClientAndReferences(@PathVariable String id) {
+		int deletedEntities = salonService.deleteClientAndReferences(id);
+		return new ResponseEntity<>("{\"response\":\"Deleted " + deletedEntities + " Entities\"}",
+				HttpStatus.OK);
+
+	}
+
+	@DeleteMapping("/clients/{id}")
+	public ResponseEntity<String> deleteClient(@PathVariable String id) {
+		int deletedEntities = salonService.deleteClient(id);
+		return deletedEntities == 0
+				? new ResponseEntity<>("{\"response\":\"Client not found\"}", HttpStatus.NOT_FOUND)
+				: new ResponseEntity<>("{\"response\":\"Client " + id + " deleted\"}", HttpStatus.OK);
+
+	}
+
+	@DeleteMapping("/appointments/{id}")
+	public ResponseEntity<String> deleteAppointment(@PathVariable String id) {
+		int deletedEntities = salonService.deleteAppointment(id);
+		return deletedEntities == 0
+				? new ResponseEntity<>("{\"response\":\"Appointment not found\"}", HttpStatus.NOT_FOUND)
+				: new ResponseEntity<>("{\"response\":\"Appointment " + id + " deleted\"}", HttpStatus.OK);
+
+	}
+
+	@DeleteMapping("/purchases/{id}")
+	public ResponseEntity<String> deletePurchase(@PathVariable String id) {
+		int deletedEntities = salonService.deletePurchase(id);
+		return deletedEntities == 0
+				? new ResponseEntity<>("{\"response\":\"Purchase not found\"}", HttpStatus.NOT_FOUND)
+				: new ResponseEntity<>("{\"response\":\"Purchase " + id + " deleted\"}", HttpStatus.OK);
+
+	}
+
+	@DeleteMapping("/services/{id}")
+	public ResponseEntity<String> deleteService(@PathVariable String id) {
+		int deletedEntities = salonService.deleteService(id);
+		return deletedEntities == 0
+				? new ResponseEntity<>("{\"response\":\"Service not found\"}", HttpStatus.NOT_FOUND)
+				: new ResponseEntity<>("{\"response\":\"Service " + id + " deleted\"}", HttpStatus.OK);
+
 	}
 }

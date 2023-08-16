@@ -8,4 +8,6 @@ import ie.jules.salon.model.entity.Client;
 
 public interface ClientRepository extends JpaRepository<Client, String>, ClientRepositoryLoyalty {
 	Optional<Client> findById(String id);
+
+	int deleteClientById(String id);
 }

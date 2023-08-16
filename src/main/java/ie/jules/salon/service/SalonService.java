@@ -1,7 +1,13 @@
 package ie.jules.salon.service;
 
-import static ie.jules.salon.util.CSVParserUtil.*;
-import static ie.jules.salon.util.DatabaseUtil.*;
+import static ie.jules.salon.util.CSVParserUtil.parseAppointments;
+import static ie.jules.salon.util.CSVParserUtil.parseClients;
+import static ie.jules.salon.util.CSVParserUtil.parsePurchases;
+import static ie.jules.salon.util.CSVParserUtil.parseServices;
+import static ie.jules.salon.util.DatabaseUtil.saveOrUpdateAppointments;
+import static ie.jules.salon.util.DatabaseUtil.saveOrUpdateClients;
+import static ie.jules.salon.util.DatabaseUtil.saveOrUpdatePurchases;
+import static ie.jules.salon.util.DatabaseUtil.saveOrUpdateServices;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -110,16 +116,9 @@ public class SalonService {
 		return serviceRepository.findById(id).orElse(null);
 	}
 
-	public List<Appointment> findByStartTimeBetween(OffsetDateTime startOfDay,
-			OffsetDateTime endOfDay) {
-		return appointmentRepository.findByStartTimeBetween(startOfDay, endOfDay);
-	}
-
 	public List<ClientLoyaltyDto> findMostLoyalClients(LocalDate date, int limit) {
 		LocalDateTime localDateTime = date.atStartOfDay();
 		OffsetDateTime offsetDateTime = localDateTime.atOffset(ZoneOffset.UTC);
-		List<ClientLoyaltyDto> clientsWithLoyaltyPoints =
-				clientRepository.findTopClientsWithLoyaltyPoints(offsetDateTime, limit);
-		return clientsWithLoyaltyPoints;
+		return clientRepository.findTopClientsWithLoyaltyPoints(offsetDateTime, limit);
 	}
 }

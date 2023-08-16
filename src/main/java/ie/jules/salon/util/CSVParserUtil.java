@@ -25,6 +25,8 @@ public class CSVParserUtil {
 	private static final DateTimeFormatter DATE_FORMATTER =
 			DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss Z");
 
+	private CSVParserUtil() {}
+
 	public static List<Client> parseClients(String csvData)
 			throws IOException, CsvValidationException {
 		try (StringReader reader = new StringReader(csvData);
@@ -33,6 +35,9 @@ public class CSVParserUtil {
 			List<ClientDummy> dummies = new ArrayList<>();
 			Map<String, String> line;
 			while ((line = csvReader.readMap()) != null) {
+				if (!VerificationUtil.verifyClientImport(line)) {
+					return null;
+				}
 				ClientDummy dummy = new ClientDummy();
 
 				dummy.setId(line.get("id"));
@@ -60,6 +65,9 @@ public class CSVParserUtil {
 			Map<String, String> line;
 
 			while ((line = csvReader.readMap()) != null) {
+				if (!VerificationUtil.verifyAppointmentImport(line)) {
+					return null;
+				}
 				AppointmentDummy dummy = new AppointmentDummy();
 
 				dummy.setId(line.get("id"));
@@ -83,6 +91,9 @@ public class CSVParserUtil {
 			List<PurchaseDummy> dummies = new ArrayList<>();
 			Map<String, String> line;
 			while ((line = csvReader.readMap()) != null) {
+				if (!VerificationUtil.verifyPurchaseImport(line)) {
+					return null;
+				}
 				PurchaseDummy dummy = new PurchaseDummy();
 
 				dummy.setId(line.get("id"));
@@ -106,6 +117,9 @@ public class CSVParserUtil {
 			List<ServiceDummy> dummies = new ArrayList<>();
 			Map<String, String> line;
 			while ((line = csvReader.readMap()) != null) {
+				if (!VerificationUtil.verifyServiceImport(line)) {
+					return null;
+				}
 				ServiceDummy dummy = new ServiceDummy();
 
 				dummy.setId(line.get("id"));

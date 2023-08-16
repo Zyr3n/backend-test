@@ -16,6 +16,8 @@ import ie.jules.salon.model.repository.PurchaseRepository;
 import ie.jules.salon.model.repository.ServiceRepository;
 
 public class DatabaseUtil {
+	private DatabaseUtil() {}
+
 	public static void saveOrUpdateClients(List<Client> clients, ClientRepository clientRepository,
 			PlatformTransactionManager transactionManager) {
 		for (Client client : clients) {

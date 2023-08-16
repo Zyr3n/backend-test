@@ -1,7 +1,6 @@
 package ie.jules.salon.model;
 
 public class ClientLoyaltyDto {
-
 	private String id;
 	private String firstName;
 	private String lastName;

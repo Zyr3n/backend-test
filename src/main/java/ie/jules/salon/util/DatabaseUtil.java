@@ -39,6 +39,32 @@ public class DatabaseUtil {
 		}
 	}
 
+	public static Client updateClient(Client client, ClientRepository clientRepository) {
+		Client existingClient = clientRepository.findById((client.getId())).orElse(null);
+		if (existingClient == null) {
+			return null;
+		}
+		if (client.getEmail() != null) {
+			existingClient.setEmail(client.getEmail());
+		}
+		if (client.getGender() != null) {
+			existingClient.setGender(client.getGender());
+		}
+		if (client.getPhone() != null) {
+			existingClient.setPhone(client.getPhone());
+		}
+		if (client.getFirstName() != null) {
+			existingClient.setFirstName(client.getFirstName());
+		}
+		if (client.getLastName() != null) {
+			existingClient.setLastName(client.getLastName());
+		}
+		if (client.isBanned() != null) {
+			existingClient.setBanned(client.isBanned());
+		}
+		return clientRepository.saveAndFlush(existingClient);
+	}
+
 	public static void saveOrUpdateAppointments(List<Appointment> appointments,
 			AppointmentRepository appointmentRepository, PlatformTransactionManager transactionManager) {
 		for (Appointment appointment : appointments) {

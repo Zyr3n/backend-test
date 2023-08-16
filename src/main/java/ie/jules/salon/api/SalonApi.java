@@ -136,4 +136,12 @@ public class SalonApi {
 				: new ResponseEntity<>("{\"response\":\"Service " + id + " deleted\"}", HttpStatus.OK);
 
 	}
+
+	@PostMapping(value = "/clients", produces = "application/json", consumes = "application/json")
+	public ResponseEntity<Client> updateClient(@RequestBody Client client) {
+		Client updatedClient = salonService.updateClient(client);
+		return updatedClient != null
+				? new ResponseEntity<>(salonService.updateClient(client), HttpStatus.OK)
+				: new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	}
 }

@@ -34,6 +34,7 @@ import ie.jules.salon.model.repository.AppointmentRepository;
 import ie.jules.salon.model.repository.ClientRepository;
 import ie.jules.salon.model.repository.PurchaseRepository;
 import ie.jules.salon.model.repository.ServiceRepository;
+import ie.jules.salon.util.DatabaseUtil;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -156,5 +157,10 @@ public class SalonService {
 	@Transactional
 	public int deleteClient(String id) {
 		return clientRepository.deleteClientById(id);
+	}
+
+	@Transactional
+	public Client updateClient(Client client) {
+		return DatabaseUtil.updateClient(client, clientRepository);
 	}
 }

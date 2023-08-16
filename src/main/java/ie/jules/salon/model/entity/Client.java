@@ -14,7 +14,7 @@ public class Client implements CsvImport {
 	@Id
 	@Column(name = "id", updatable = false, nullable = false)
 	private String id;
-	private boolean banned;
+	private Boolean banned;
 	@Column(name = "first_name")
 	private String firstName;
 	@Column(name = "last_name")
@@ -78,7 +78,7 @@ public class Client implements CsvImport {
 		this.id = id;
 	}
 
-	public boolean isBanned() {
+	public Boolean isBanned() {
 		return banned;
 	}
 

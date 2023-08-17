@@ -3,6 +3,7 @@ spring:
     console:
       enabled: true
   jpa:
+    persistence-unit-name: testPU
     properties:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect

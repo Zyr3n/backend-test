@@ -4,6 +4,29 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.2'
 }
 
+sourceSets {
+    integrationTest {
+        java.srcDir 'src/integrationTest/java'
+        resources.srcDir 'src/integrationTest/resources'
+        output.resourcesDir 'build/resources/integrationTest'
+    }
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude '**/application-integrationtest.yml'
+}
+
+bootJar {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    exclude '**/application-integrationtest.yml'
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom implementation, testImplementation
+    integrationTestRuntimeOnly.extendsFrom runtimeOnly, testRuntimeOnly
+}
+
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
@@ -20,6 +43,10 @@ compileTestJava {
     options.compilerArgs += '--enable-preview'
 }
 
+compileIntegrationTestJava {
+    options.compilerArgs += '--enable-preview'
+}
+
 repositories {
     mavenCentral()
 }
@@ -33,9 +60,37 @@ dependencies {
     implementation 'com.h2database:h2:2.2.220'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    testImplementation 'org.springframework.boot:spring-boot-test-autoconfigure'
+    testImplementation 'org.springframework.boot:spring-boot-test'
+
+    integrationTestImplementation 'org.springframework.boot:spring-boot-starter-test'
+    integrationTestImplementation sourceSets.main.output
 }
 
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+tasks.register('integrationTest', Test) {
+    group = 'Verification'
+    description = 'Runs the integration tests.'
+    useJUnitPlatform()
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+    dependsOn processIntegrationTestResources
+}
+
+clean {
+    delete fileTree(dir: 'build/integrationTest')
+}
+
+tasks.named('processIntegrationTestResources', ProcessResources) {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+build.dependsOn integrationTest
+
+
 
